@@ -1,0 +1,14 @@
+[features]
+seeds = false
+[programs.devnet]
+dstage_solana_contracts = "DfxRVABAcSLVN9chWpxJMVU8RW9LwYDt8CqDiQi7bURA"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "http://127.0.0.1:8899"
+wallet = "/Users/asadali/.config/solana/devnet.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
