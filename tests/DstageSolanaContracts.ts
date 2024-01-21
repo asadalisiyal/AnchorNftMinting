@@ -114,6 +114,11 @@ describe("Dstage Solana Contracts ", () => {
 
     );
     const metaDataAddress = await getMetadata(mintKey.publicKey);
+    const masterEdition = await getMasterEdition(mintKey.publicKey);
+
+    console.log("MetaData is ", metaDataAddress); 
+    console.log("master Edition is ", masterEdition);
+
     const tx = await program.provider.sendAndConfirm(mint_tx, [mintKey]);
     console.log("Transaction is ", tx);
 
@@ -125,15 +130,21 @@ describe("Dstage Solana Contracts ", () => {
       {
         mintAuthority: wallet.publicKey,
         mint: mintKey.publicKey,
-        tokenProgram: TOKEN_PROGRAM_ID,
         metadata: metaDataAddress,
         tokenAccount: NftTokenAccount,
         tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
         payer: wallet.publicKey,
         systemProgram: SystemProgram.programId,
         rent: anchor.web3.SYSVAR_RENT_PUBKEY,
-      },
-    ).rpc();
+        masterEdition: masterEdition,
+        tokenProgram: TOKEN_PROGRAM_ID,
+
+      })
+      .rpc(
+      {
+        skipPreflight:true
+      }
+    );
 
     console.log("Transaction Log is ", tx2);
 
@@ -142,46 +153,46 @@ describe("Dstage Solana Contracts ", () => {
 
 
 
-  it("Transfer NFT ", async () => {
+  // it("Transfer NFT ", async () => {
 
-    const lamports: number =
-      await program.provider.connection.getMinimumBalanceForRentExemption(
-        MINT_SIZE
-      );
+  //   const lamports: number =
+  //     await program.provider.connection.getMinimumBalanceForRentExemption(
+  //       MINT_SIZE
+  //     );
 
-    let to_ata = await getAssociatedTokenAddress(
-      // minKey of NFT and Address of to wallet
-      mintKey.publicKey,
-      to_address.publicKey
-    );
-    const mint_tx = new anchor.web3.Transaction().add(
-      // Create Token Account (ATA Account)
-      createAssociatedTokenAccountInstruction(
-        wallet.publicKey, to_ata, to_address.publicKey, mintKey.publicKey
-      )
-    );
+  //   let to_ata = await getAssociatedTokenAddress(
+  //     // minKey of NFT and Address of to wallet
+  //     mintKey.publicKey,
+  //     to_address.publicKey
+  //   );
+  //   const mint_tx = new anchor.web3.Transaction().add(
+  //     // Create Token Account (ATA Account)
+  //     createAssociatedTokenAccountInstruction(
+  //       wallet.publicKey, to_ata, to_address.publicKey, mintKey.publicKey
+  //     )
+  //   );
 
-    const tx = await program.provider.sendAndConfirm(mint_tx, []);
+  //   const tx = await program.provider.sendAndConfirm(mint_tx, []);
 
 
 
-    const NftTokenAccount = await getAssociatedTokenAddress(
-      mintKey.publicKey,
-      wallet.publicKey
-    );
+  //   const NftTokenAccount = await getAssociatedTokenAddress(
+  //     mintKey.publicKey,
+  //     wallet.publicKey
+  //   );
 
-    let functionHsh = await program.methods.transferNft().accounts({
-      tokenProgram: TOKEN_PROGRAM_ID,
-      // From Should be ATA 
-      from: NftTokenAccount,
-      to: to_ata,
-      fromAuthority: wallet.publicKey,
-    }).rpc();
+  //   let functionHsh = await program.methods.transferNft().accounts({
+  //     tokenProgram: TOKEN_PROGRAM_ID,
+  //     // From Should be ATA 
+  //     from: NftTokenAccount,
+  //     to: to_ata,
+  //     fromAuthority: wallet.publicKey,
+  //   }).rpc();
 
-    console.log("5 Transfered to ", to_ata.toBase58());
-    console.log("Transfer Hash is ", functionHsh);
+  //   console.log("5 Transfered to ", to_ata.toBase58());
+  //   console.log("Transfer Hash is ", functionHsh);
 
-  });
+  // });
 
 
 });

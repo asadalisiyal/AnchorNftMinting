@@ -126,8 +126,6 @@ pub struct MintNFT<'info> {
     /// CHECK:    
     #[account(mut)]
     pub mint: UncheckedAccount<'info>,
-    // #[account(mut)]
-    pub token_program: Program<'info, Token>,
     /// CHECK:    
     #[account(mut)]
     pub metadata: UncheckedAccount<'info>,
@@ -145,6 +143,9 @@ pub struct MintNFT<'info> {
     /// CHECK:    
     #[account(mut)]
     pub master_edition: UncheckedAccount<'info>,
+    
+    pub token_program: Program<'info, Token>,
+
 }
 
 

@@ -1,6 +1,6 @@
 import * as anchor from "@project-serum/anchor";
 import { Program } from "@project-serum/anchor";
-import { NftMinting } from "../target/types/nft_minting";
+import { NftMinting } from "../target/types/dstage_solana_contracts";
 import {
   TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountInstruction,
