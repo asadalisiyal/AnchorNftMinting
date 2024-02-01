@@ -1,3 +1,4 @@
-https://github.com/blockchainlover2019/Solana-NFT-MarketplaceDesign/blob/master/contract_design.pdf
+Please read Solana documentation for more calrification
 
-the complete flow of Architecture is included in this readme file# AnchorNftMinting
+
+https://solana.com/docs/core/accounts
